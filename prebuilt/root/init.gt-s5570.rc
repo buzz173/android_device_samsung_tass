@@ -1,3 +1,8 @@
+# Copyright (C) 2012 The Android Open Source Project
+# Copyright (C) 2012 Dāvis Mālnieks (TheWhisp), Rohan Bathla (rohan007)
+#
+#
+
 on early-init
     mkdir /storage 0755 system sdcard_r
     mkdir /storage/sdcard0 0000 system system

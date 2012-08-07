@@ -1,4 +1,5 @@
 # Copyright (C) 2012 The Android Open Source Project
+# Copyright (C) 2012 Dāvis Mālnieks (TheWhisp), Rohan Bathla (rohan007)
 #
 # IMPORTANT: Do not create world writable files or directories.
 # This is a common source of Android security bugs.

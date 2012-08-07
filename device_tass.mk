@@ -21,6 +21,12 @@
 
 # Inherit from those products. Most specific first.
 
+
+#
+### This also includes proprietary files!
+#
+
+
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 DEVICE_PACKAGE_OVERLAYS += device/samsung/tass/overlay
 
@@ -43,31 +49,35 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.primary.tass \
-    audio_policy.tass 
+    audio_policy.tass \
+    libaudioutils
 
+## Camera
+PRODUCT_PACKAGES += \
+    libcamera \
+    camera.msm7x27
+
+## Device specific
+PRODUCT_PACKAGES += \
+    lights.tass  
+
+## GPS
+PRODUCT_PACKAGES += \
+    gps.tass \
+    librpc \
+
+## Applications
+PRODUCT_PACKAGES += \
+    FileManager 
+  
 ## Other
 PRODUCT_PACKAGES += \
-    librpc \
     make_ext4fs \
     brcm_patchram_plus \
     bdaddr_read \
     setup_fs \
-    rild
+    rild 
 
-## Device specific
-PRODUCT_PACKAGES += \
-    gps.tass \
-    lights.tass \
-    FileManager 
-
-## Binaries
-PRODUCT_COPY_FILES += \
-    device/samsung/tass/prebuilt/bin/run_drm:system/bin/run_drm \
-    device/samsung/tass/prebuilt/bin/run_usb:system/bin/run_usb
-
-## Run DRM and USB mass storage
-PRODUCT_COPY_FILES += \
-    device/samsung/tass/prebuilt/etc/usb.fix:system/etc/usb.fix
 
 ## Vold config
 PRODUCT_COPY_FILES += \
@@ -91,12 +101,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
-## Board-specific init
+## Ramdisk
 PRODUCT_COPY_FILES += \
     device/samsung/tass/prebuilt/root/ueventd.rc:root/ueventd.rc \
-    device/samsung/tass/prebuilt/root/default.prop:root/default.prop \
     device/samsung/tass/prebuilt/root/init.gt-s5570.rc:root/init.gt-s5570.rc \
-    device/samsung/tass/prebuilt/root/init.gt-s5570.rc:root/init.gt-s5570.usb.rc \
     device/samsung/tass/prebuilt/root/init.rc:root/init.rc 
 
 ## Modules
@@ -107,9 +115,38 @@ PRODUCT_COPY_FILES += \
 
 ## Root modules
 PRODUCT_COPY_FILES += \
-    device/samsung/tass/prebuilt/root/modules/fsr.ko:root/lib/modules/fsr.ko \
-    device/samsung/tass/prebuilt/root/modules/fsr_stl.ko:root/lib/modules/fsr_stl.ko \
-    device/samsung/tass/prebuilt/root/modules/sec_param.ko:root/lib/modules/sec_param.ko 
+    device/samsung/tass/prebuilt/lib/modules/fsr.ko:root/lib/modules/fsr.ko \
+    device/samsung/tass/prebuilt/lib/modules/fsr_stl.ko:root/lib/modules/fsr_stl.ko \
+    device/samsung/tass/prebuilt/lib/modules/sec_param.ko:root/lib/modules/sec_param.ko
+
+## Bluetooth
+PRODUCT_COPY_FILES += \
+    device/samsung/tass/prebuilt/etc/init.d/01bt:system/etc/init.d/01bt 
+
+## MAC Address
+PRODUCT_COPY_FILES += \
+    device/samsung/tass/prebuilt/bin/get_macaddrs:system/bin/get_macaddrs
+
+## Wi-Fi config
+PRODUCT_COPY_FILES += \
+    device/samsung/tass/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    device/samsung/tass/prebuilt/etc/wifi/hostapd.conf:system/etc/wifi/hostapd.conf \
+    device/samsung/tass/prebuilt/etc/wifi/dhcpcd.conf:system/etc/wifi/dhcpcd.conf \
+    device/samsung/tass/prebuilt/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf 
+
+## Media
+PRODUCT_COPY_FILES += \
+    device/samsung/tass/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    device/samsung/tass/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
+    device/samsung/tass/prebuilt/etc/audio_effects.conf:system/etc/audio_effects.conf \
+    device/samsung/tass/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
+    device/samsung/tass/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    device/samsung/tass/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    device/samsung/tass/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf \
+
+#
+## Proprietary
+# 
 
 ## Atheros AR6003 firmware
 PRODUCT_COPY_FILES += \
@@ -126,24 +163,6 @@ PRODUCT_COPY_FILES += \
     device/samsung/tass/prebuilt/bin/wlan_mac:system/bin/wlan_mac \
     device/samsung/tass/prebuilt/bin/wlan_tool:system/bin/wlan_tool \
     device/samsung/tass/prebuilt/bin/wmiconfig:system/bin/wmiconfig 
-
-## Wi-Fi config
-PRODUCT_COPY_FILES += \
-    device/samsung/tass/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    device/samsung/tass/prebuilt/etc/wifi/hostapd.conf:system/etc/wifi/hostapd.conf \
-    device/samsung/tass/prebuilt/etc/wifi/dhcpcd.conf:system/etc/wifi/dhcpcd.conf \
-    device/samsung/tass/prebuilt/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf 
-
-## Media
-PRODUCT_COPY_FILES += \
-    device/samsung/tass/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
-    device/samsung/tass/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
-    device/samsung/tass/prebuilt/etc/audio_effects.conf:system/etc/audio_effects.conf \
-    device/samsung/tass/prebuilt/etc/hosts:system/etc/hosts \
-    device/samsung/tass/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
-    device/samsung/tass/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml \
-    device/samsung/tass/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
-    device/samsung/tass/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf \
 
 ## Keymap
 PRODUCT_COPY_FILES += \
@@ -174,11 +193,8 @@ PRODUCT_COPY_FILES += \
     device/samsung/tass/prebuilt/bin/gpsd:system/bin/gpsd \
     device/samsung/tass/prebuilt/bin/gpsd:system/vendor/bin/gpsd \
     device/samsung/tass/prebuilt/lib/hw/gps.msm7x27.so:system/vendor/lib/hw/gps.msm7x27.so \
-    device/samsung/tass/prebuilt/lib/hw/gps.msm7x27.so:system/lib/hw/gps.msm7x27.so
-
-## MAC Address
-PRODUCT_COPY_FILES += \
-    device/samsung/tass/prebuilt/bin/get_macaddrs:system/bin/get_macaddrs
+    device/samsung/tass/prebuilt/lib/hw/gps.msm7x27.so:system/lib/hw/gps.msm7x27.so \
+    device/samsung/tass/prebuilt/lib/hw/gps.tass.so:system/lib/hw/gps.tass.so # using from ICS, for some reason JB's on isn't working
 
 ## GPU firmware and libraries
 PRODUCT_COPY_FILES += \
@@ -201,7 +217,7 @@ PRODUCT_COPY_FILES += \
     device/samsung/tass/prebuilt/bin/memsicd:system/bin/memsicd \
     device/samsung/tass/prebuilt/lib/hw/sensors.tass.so:system/lib/hw/sensors.tass.so 
 
-## RIL related stuff
+## RIL
 PRODUCT_COPY_FILES += \
     device/samsung/tass/prebuilt/bin/qmuxd:system/bin/qmuxd \
     device/samsung/tass/prebuilt/lib/libdiag.so:system/lib/libdiag.so \
@@ -251,11 +267,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_LOCALES += en
 PRODUCT_AAPT_CONFIG := normal ldpi mdpi
 PRODUCT_AAPT_PREF_CONFIG := ldpi
-$(call inherit-product, build/target/product/full_base.mk)
 
 # HardwareRenderer properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    hwui.render_dirty_regions=true
+    hwui.render_dirty_regions=false
 
 # Misc properties
 PRODUCT_PROPERTY_OVERRIDES += \

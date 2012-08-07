@@ -15,3 +15,6 @@ PRODUCT_VERSION_DEVICE_SPECIFIC := -GT-S5570
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := tass
 PRODUCT_NAME := cm_tass
+
+## Bootanimation
+TARGET_BOOTANIMATION_NAME := vertical-240x320

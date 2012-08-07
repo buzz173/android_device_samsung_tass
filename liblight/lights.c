@@ -82,6 +82,7 @@ static int set_light_backlight(struct light_device_t *dev,
 	pthread_mutex_unlock(&g_lock);
 	return err;
 }
+
 static int set_light_buttons (struct light_device_t* dev,
 		struct light_state_t const* state) {
 	int err = 0;

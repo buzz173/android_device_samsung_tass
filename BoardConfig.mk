@@ -1,4 +1,5 @@
 # Copyright (C) 2007 The Android Open Source Project
+# Copyright (C) 2012 Dāvis Mālnieks (TheWhisp)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,23 +24,13 @@ TARGET_GLOBAL_CFLAGS += -mfpu=vfp -mfloat-abi=softfp -Os
 TARGET_GLOBAL_CPPFLAGS += -mfpu=vfp -mfloat-abi=softfp -Os
 
 USE_CAMERA_STUB := false
-BOARD_USE_FROYO_LIBCAMERA := true
 
-# WARNING: This line must come *before* including the proprietary
-# variant, so that it gets overwritten by the parent (which goes
-# against the traditional rules of inheritance).
-# for now
-
-
-## Bootloader, kernel
+## Kernel
 TARGET_NO_BOOTLOADER := true
-TARGET_BOOTLOADER_BOARD_NAME := tass
 TARGET_NO_RADIOIMAGE := true
-TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/tass/prebuilt/recovery_kernel
-TARGET_RECOVERY_INITRC := device/samsung/tass/prebuilt/recovery.rc
+TARGET_BOOTLOADER_BOARD_NAME := tass
 BOARD_KERNEL_BASE := 0x13600000
 BOARD_KERNEL_PAGESIZE := 4096
-
 TARGET_KERNEL_SOURCE := kernel/samsung/tass
 TARGET_KERNEL_CONFIG := cyanogenmod_tass_defconfig
 
@@ -63,12 +54,10 @@ WITH_JIT := true
 ENABLE_JSC_JIT := true
 
 ## Qualcomm, display
-BOARD_USES_HWCOMPOSER := false
 BOARD_USES_QCOM_HARDWARE := true
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DREFRESH_RATE=56 -DQCOM_ICS_COMPAT -DICS_CAMERA_BLOB -DFORCE_CPU_UPLOAD -DQCOM_NO_SECURE_PLAYBACK
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_ICS_COMPAT -DICS_CAMERA_BLOB -DFORCE_CPU_UPLOAD -DQCOM_NO_SECURE_PLAYBACK
 BOARD_NEEDS_MEMORYHEAPPMEM := true
 USE_OPENGL_RENDERER := true
-BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 TARGET_USES_GENLOCK := true
 TARGET_FORCE_CPU_UPLOAD := true
 BOARD_EGL_CFG := device/samsung/tass/prebuilt/lib/egl/egl.cfg
@@ -79,7 +68,6 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := tass
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 1240
 
 ## Other Qualcomm config
-
 BOARD_USES_QCOM_LIBS := true
 BOARD_USES_QCOM_LIBRPC := true
 BOARD_USES_QCOM_AUDIO_SPEECH := true
@@ -92,7 +80,7 @@ BOARD_HAVE_SAMSUNG_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-## Radio
+## FM
 BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 BOARD_FM_DEVICE := brcm2049
@@ -135,3 +123,4 @@ BOARD_BML_BOOT := "/dev/block/bml8"
 BOARD_BML_RECOVERY := "/dev/block/bml9"
 BOARD_RECOVERY_HANDLES_MOUNT := true
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/tass/recovery/graphics.c
+TARGET_RECOVERY_INITRC := device/samsung/tass/prebuilt/recovery.rc
